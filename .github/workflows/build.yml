@@ -1,0 +1,35 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - poc
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Checkout other repository
+        uses: actions/checkout@v2
+        with:
+          repository: hanzla-spec/api
+          path: api
+          
+      - name: Use metadata from api
+        run: |
+          echo "Branch: ${{ github.event.inputs.branch }}"
+          echo "Commit: ${{ github.event.inputs.commit }}"
+          echo "Author: ${{ github.event.inputs.author }}"
+
+      - name: Build the project
+        run: |
+          # Add your build commands here
+          echo "Building the new project..."
+
+      - name: Deploy the project
+        run: |
+          # Add your deploy commands here
+          echo "Deploying the new project..."
