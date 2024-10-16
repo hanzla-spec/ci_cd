@@ -5,13 +5,16 @@ on:
     inputs:
       branch:
         description: 'Branch name'
-        required: true
+        required: false
       commit:
         description: 'Commit SHA'
-        required: true
+        required: false
       author:
         description: 'Author of the commit'
-        required: true
+        required: false
+      changed_files:
+        description: 'changed files'
+        required: false
         
 jobs:
   build_and_deploy:
@@ -19,25 +22,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
-      - name: Checkout other repository
-        uses: actions/checkout@v2
-        with:
-          repository: hanzla-spec/api
-          path: api
           
       - name: Use metadata from api
         run: |
-          echo "Branch: ${{ github.event.inputs.branch }}"
-          echo "Commit: ${{ github.event.inputs.commit }}"
-          echo "Author: ${{ github.event.inputs.author }}"
-
-      - name: Build the project
-        run: |
-          # Add your build commands here
-          echo "Building the new project..."
-
-      - name: Deploy the project
-        run: |
-          # Add your deploy commands here
-          echo "Deploying the new project..."
+          echo "Branch: ${{ github.event.inputs.changed_files }}"
