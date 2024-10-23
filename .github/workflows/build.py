@@ -1,6 +1,9 @@
 name: Build and Deploy
 
 on:
+  push:
+    branches:
+      - feature
   workflow_dispatch:
     inputs:
       branch:
