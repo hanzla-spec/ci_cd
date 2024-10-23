@@ -1,18 +1,26 @@
-name: Build and Deployss
+name: CI on Push
 
 on:
   push:
     branches:
-      - feature
+      - main
+      - 'feature/*' # Triggers on any branch that starts with 'feature/'
 
-        
 jobs:
-  build_and_deploy:
+  build:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-          
-      - name: Use metadata from api
-        run: |
-          echo "Branch: ${{ github.event.inputs.changed_files }}"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' # Specify your Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
